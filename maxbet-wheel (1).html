@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>MaxBet — Spin the Wheel · Win Your Bonus</title>
+<meta name="description" content="Spin the MaxBet wheel and unlock your welcome offer. Bet like a champion.">
+<style>
+  :root{
+    --bg:#000;
+    --green:#7ed321;
+    --green-hi:#b8f53a;
+    --green-lo:#3fae12;
+    --card:#0d0d0d;
+    --line:#1d1d1d;
+    --text:#f4f4f4;
+    --mute:#9a9a9a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--text);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100%}
+  body{
+    background:
+      radial-gradient(ellipse 70% 40% at 50% 0%, rgba(126,211,33,.16), transparent 70%),
+      radial-gradient(ellipse 60% 35% at 50% 100%, rgba(126,211,33,.10), transparent 70%),
+      #000;
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    padding:20px 16px calc(24px + env(safe-area-inset-bottom));
+  }
+  .wrap{width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center;text-align:center}
+
+  /* Logo (CSS recreation of the wordmark) */
+  .logo{position:relative;width:210px;height:112px;margin:4px 0 6px;font-style:italic;font-weight:900;letter-spacing:-2px;user-select:none}
+  .logo .max{position:absolute;left:0;right:0;top:0;font-size:62px;line-height:1;color:rgba(255,255,255,.07);-webkit-text-stroke:1px rgba(255,255,255,.22);transform:skewX(-6deg)}
+  .logo .bet{position:absolute;left:0;right:0;top:34px;font-size:84px;line-height:1;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent;transform:skewX(-6deg);filter:drop-shadow(0 4px 18px rgba(126,211,33,.35))}
+  .logo svg{position:absolute;right:-6px;top:-8px;width:62px;height:62px;filter:drop-shadow(0 0 10px rgba(126,211,33,.6))}
+  .tag{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#6d6d6d;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .tag b{color:var(--green)}
+  .tag i{display:block;width:26px;height:2px;background:var(--green)}
+
+  h1{font-size:clamp(26px,7.4vw,34px);line-height:1.12;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.5px}
+  h1 span{background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--mute);margin:10px 0 22px;font-size:15px}
+
+  /* Wheel */
+  .stage{position:relative;width:min(86vw,360px);aspect-ratio:1;margin:0 auto 24px}
+  .glow{position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(from 0deg,var(--green),#0b2a00,var(--green-hi),#0b2a00,var(--green));filter:blur(14px);opacity:.55;animation:glow 6s linear infinite}
+  @keyframes glow{to{transform:rotate(360deg)}}
+  .rim{position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,#2c2c2c,#050505);padding:9px;box-shadow:0 0 0 2px #000,0 0 0 4px var(--green)}
+  .wheel{width:100%;height:100%;border-radius:50%;transition:transform 5.2s cubic-bezier(.12,.72,.08,1);will-change:transform}
+  .wheel svg{width:100%;height:100%;display:block}
+  .hub{position:absolute;left:50%;top:50%;width:21%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--green-hi),var(--green-lo));border:4px solid #000;box-shadow:0 0 0 3px var(--green),0 6px 22px rgba(0,0,0,.7);display:grid;place-items:center;z-index:3}
+  .hub svg{width:55%;height:55%}
+  .pointer{position:absolute;left:50%;top:-12px;transform:translateX(-50%);z-index:4;width:34px;height:44px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.8))}
+
+  /* Buttons */
+  .btn{appearance:none;border:0;cursor:pointer;width:100%;max-width:380px;padding:18px 22px;border-radius:14px;font-size:19px;font-weight:900;font-style:italic;letter-spacing:.04em;text-transform:uppercase;color:#031000;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));box-shadow:0 8px 26px rgba(126,211,33,.35),inset 0 1px 0 rgba(255,255,255,.5);transition:transform .15s,filter .15s;display:inline-block;text-decoration:none}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:active{transform:scale(.98)}
+  .btn[disabled]{opacity:.55;cursor:not-allowed}
+  .pulse{animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 26px rgba(126,211,33,.35)}50%{box-shadow:0 8px 40px rgba(126,211,33,.75)}}
+  .ghost{background:transparent;color:var(--text);box-shadow:none;border:1px solid #333;font-size:15px;padding:14px;margin-top:10px;font-style:normal}
+  .note{font-size:12px;color:#707070;margin-top:14px}
+
+  /* Offers */
+  .offers{width:100%;margin-top:34px;display:grid;gap:12px;text-align:left}
+  .offers h2{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute);text-align:center;margin-bottom:4px}
+  .offer{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:14px;padding:14px 16px}
+  .offer .n{flex:none;width:38px;height:38px;border-radius:10px;background:rgba(126,211,33,.12);color:var(--green);display:grid;place-items:center;font-weight:900;font-size:18px;font-style:italic}
+  .offer p{font-size:14.5px;line-height:1.35;font-weight:600}
+  .offer p b{color:var(--green)}
+
+  footer{margin-top:30px;font-size:11px;line-height:1.55;color:#6a6a6a;max-width:420px;text-align:center}
+  footer .age{display:inline-grid;place-items:center;width:30px;height:30px;border:2px solid #444;border-radius:50%;color:#aaa;font-weight:800;font-size:12px;margin-bottom:8px}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal.show{display:flex}
+  .sheet{width:100%;max-width:400px;background:linear-gradient(180deg,#111,#050505);border:1px solid var(--green);border-radius:22px;padding:28px 22px 22px;text-align:center;box-shadow:0 0 60px rgba(126,211,33,.28);animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+  @keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+  .sheet .kicker{color:var(--green);font-weight:800;letter-spacing:.25em;font-size:12px;text-transform:uppercase}
+  .sheet h3{font-size:30px;font-weight:900;font-style:italic;text-transform:uppercase;line-height:1.1;margin:10px 0 8px;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sheet p{color:#c8c8c8;font-size:15px;margin-bottom:20px}
+  .confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="logo" aria-label="MaxBet">
+    <svg viewBox="0 0 64 64"><path d="M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z" fill="url(#bolt)"/><defs><linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8f53a"/><stop offset="1" stop-color="#3fae12"/></linearGradient></defs></svg>
+    <div class="max">MAX</div>
+    <div class="bet">BET</div>
+  </div>
+  <div class="tag"><i></i><span>Bet like a <b>Champion.</b></span><i></i></div>
+
+  <h1>Spin the wheel &amp; <span>unlock your offer</span></h1>
+  <p class="sub">One spin. Three big offers. See which one you get.</p>
+
+  <div class="stage">
+    <div class="glow"></div>
+    <div class="rim"><div class="wheel" id="wheel"></div></div>
+    <svg class="pointer" viewBox="0 0 34 44"><path d="M17 44 L2 12 Q0 2 10 1 L24 1 Q34 2 32 12 Z" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="17" cy="13" r="5" fill="#7ed321"/></svg>
+    <div class="hub"><svg viewBox="0 0 64 64"><path d="M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z" fill="#031000"/></svg></div>
+  </div>
+
+  <button class="btn pulse" id="spin">Spin now — free</button>
+  <p class="note">18+ · Please gamble responsibly · T&amp;Cs apply</p>
+
+  <section class="offers">
+    <h2>What's up for grabs</h2>
+    <div class="offer"><span class="n">1</span><p><b>150% BONUS</b> on your first-time deposit!</p></div>
+    <div class="offer"><span class="n">2</span><p>Grab your <b>5 FREE SPINS</b> now &amp; win big!</p></div>
+    <div class="offer"><span class="n">3</span><p>Place <b>4 tickets</b> and get <b>25% back as a freebet</b> — every day!</p></div>
+  </section>
+
+  <footer>
+    <div class="age">18+</div><br>
+    Betting can be addictive. Play responsibly and only with money you can afford to lose.
+    Offers are subject to the terms and conditions of MaxBet and may vary by region. Not available to persons under 18.
+  </footer>
+</div>
+
+<!-- Result modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="sheet">
+    <div class="kicker">Congratulations!</div>
+    <h3 id="prizeTitle"></h3>
+    <p id="prizeText"></p>
+    <a class="btn pulse" id="claim" href="#" rel="noopener">Claim my offer</a>
+    <button class="btn ghost" id="again">Spin again</button>
+  </div>
+</div>
+<canvas class="confetti" id="confetti"></canvas>
+
+<script>
+/* ============ CONFIG ============ */
+// MaxBet tracking link, opened when the visitor taps "Claim my offer".
+const CTA_URL = "https://linkhosts.xyz/cf/r/6a843b095e893a0012ad8946?ad_id={{ad.id}}&adset_id={{adset.id}}&campaign_id={{campaign.id}}&ad_name={{ad.name}}&adset_name={{adset.name}}&campaign_name={{campaign.name}}&source={{site_source_name}}&placement={{placement}}";
+/* ================================= */
+
+const OFFERS = [
+  {label:"150% BONUS",  short:"150%",     title:"150% Bonus",     text:"Get a 150% BONUS on your first-time deposit. Sign up and deposit to claim it."},
+  {label:"5 FREE SPINS",short:"5 SPINS",  title:"5 Free Spins",   text:"Grab your 5 FREE SPINS now and win big. Create your account to claim them."},
+  {label:"25% FREEBET", short:"25% BACK", title:"25% Freebet",    text:"Place 4 tickets and get 25% back as a freebet — every single day."}
+];
+const SEG = 6, STEP = 360/SEG;
+const wheelEl = document.getElementById('wheel');
+
+// Build wheel SVG (6 segments, offers repeat twice)
+(function build(){
+  const R=200, cx=200, cy=200, ns="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(ns,"svg"); svg.setAttribute("viewBox","0 0 400 400");
+  const fills=["#7ed321","#0b0b0b"]; 
+  for(let i=0;i<SEG;i++){
+    const a0=(i*STEP-90-STEP/2)*Math.PI/180, a1=(i*STEP-90+STEP/2)*Math.PI/180;
+    const x0=cx+R*Math.cos(a0), y0=cy+R*Math.sin(a0), x1=cx+R*Math.cos(a1), y1=cy+R*Math.sin(a1);
+    const p=document.createElementNS(ns,"path");
+    p.setAttribute("d",`M${cx} ${cy} L${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1} Z`);
+    const green = i%2===0;
+    p.setAttribute("fill", green? "url(#g)" : "#0c0c0c");
+    p.setAttribute("stroke","#000"); p.setAttribute("stroke-width","3");
+    svg.appendChild(p);
+    const o=OFFERS[i%3];
+    const t=document.createElementNS(ns,"text");
+    t.setAttribute("x",cx); t.setAttribute("y",cy-R*0.60);
+    t.setAttribute("text-anchor","middle");
+    t.setAttribute("transform",`rotate(${i*STEP} ${cx} ${cy})`);
+    t.setAttribute("font-family","Segoe UI,Roboto,Arial,sans-serif");
+    t.setAttribute("font-weight","900"); t.setAttribute("font-style","italic");
+    t.setAttribute("font-size","26");
+    t.setAttribute("fill", green? "#031000":"#b8f53a");
+    t.textContent=o.short;
+    svg.appendChild(t);
+    const s=document.createElementNS(ns,"text");
+    s.setAttribute("x",cx); s.setAttribute("y",cy-R*0.60+22);
+    s.setAttribute("text-anchor","middle");
+    s.setAttribute("transform",`rotate(${i*STEP} ${cx} ${cy})`);
+    s.setAttribute("font-family","Segoe UI,Roboto,Arial,sans-serif");
+    s.setAttribute("font-weight","700"); s.setAttribute("font-size","12");
+    s.setAttribute("letter-spacing","2");
+    s.setAttribute("fill", green? "#0b2a00":"#777");
+    s.textContent = ["BONUS","FREE","FREEBET"][i%3];
+    svg.appendChild(s);
+  }
+  const defs=document.createElementNS(ns,"defs");
+  defs.innerHTML='<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8f53a"/><stop offset="1" stop-color="#3fae12"/></linearGradient>';
+  svg.insertBefore(defs,svg.firstChild);
+  wheelEl.appendChild(svg);
+})();
+
+let rotation=0, spinning=false, spins=0, current=null;
+const spinBtn=document.getElementById('spin');
+const modal=document.getElementById('modal');
+
+function spin(){
+  if(spinning) return;
+  spinning=true; spinBtn.disabled=true; spinBtn.classList.remove('pulse');
+  const idx=Math.floor(Math.random()*SEG);          // fair random segment
+  current=OFFERS[idx%3];
+  const jitter=(Math.random()-.5)*(STEP*0.6);       // land anywhere inside the segment
+  const target=360*6 + (360 - idx*STEP) + jitter;
+  rotation = rotation - (rotation%360) + target;
+  wheelEl.style.transform=`rotate(${rotation}deg)`;
+  setTimeout(()=>{
+    spinning=false; spinBtn.disabled=false; spins++;
+    showResult();
+  },5400);
+}
+function showResult(){
+  document.getElementById('prizeTitle').textContent=current.title;
+  document.getElementById('prizeText').textContent=current.text;
+  document.getElementById('claim').href=CTA_URL;
+  modal.classList.add('show');
+  burst();
+}
+spinBtn.addEventListener('click',spin);
+document.getElementById('again').addEventListener('click',()=>{
+  modal.classList.remove('show'); spinBtn.textContent="Spin again"; spinBtn.classList.add('pulse');
+});
+
+// Confetti (green palette)
+const cv=document.getElementById('confetti'), cx2=cv.getContext('2d');
+function burst(){
+  cv.width=innerWidth; cv.height=innerHeight;
+  const cols=["#7ed321","#b8f53a","#3fae12","#ffffff"];
+  const ps=Array.from({length:110},()=>({x:innerWidth/2,y:innerHeight/2.2,vx:(Math.random()-.5)*14,vy:Math.random()*-14-3,s:Math.random()*7+3,c:cols[Math.random()*4|0],r:Math.random()*6}));
+  let f=0;
+  (function tick(){
+    cx2.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=.2;cx2.save();cx2.translate(p.x,p.y);cx2.rotate(p.r);cx2.fillStyle=p.c;cx2.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx2.restore();});
+    if(++f<110) requestAnimationFrame(tick); else cx2.clearRect(0,0,cv.width,cv.height);
+  })();
+}
+</script>
+</body>
+</html>
