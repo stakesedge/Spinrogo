@@ -88,15 +88,8 @@
 <body>
 <div class="wrap">
 
-  <div class="logo" aria-label="MaxBet">
-    <svg viewBox="0 0 64 64"><path d="M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z" fill="url(#bolt)"/><defs><linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8f53a"/><stop offset="1" stop-color="#3fae12"/></linearGradient></defs></svg>
-    <div class="max">MAX</div>
-    <div class="bet">BET</div>
-  </div>
-  <div class="tag"><i></i><span>Bet like a <b>Champion.</b></span><i></i></div>
-
   <h1>Spin the wheel &amp; <span>unlock your offer</span></h1>
-  <p class="sub">One spin. Three big offers. See which one you get.</p>
+  <p class="sub">Spin the wheel. Two big offers. See which one you get.</p>
 
   <div class="stage">
     <div class="glow"></div>
@@ -112,7 +105,6 @@
     <h2>What's up for grabs</h2>
     <div class="offer"><span class="n">1</span><p><b>150% BONUS</b> on your first-time deposit!</p></div>
     <div class="offer"><span class="n">2</span><p>Grab your <b>5 FREE SPINS</b> now &amp; win big!</p></div>
-    <div class="offer"><span class="n">3</span><p>Place <b>4 tickets</b> and get <b>25% back as a freebet</b> — every day!</p></div>
   </section>
 
   <footer>
@@ -142,20 +134,17 @@ const CTA_URL = "https://linkhosts.xyz/cf/r/6a843b095e893a0012ad8946?ad_id={{ad.
 
 const OFFERS = [
   {label:"150% BONUS",  short:"150%",     title:"150% Bonus",     text:"Get a 150% BONUS on your first-time deposit. Sign up and deposit to claim it."},
-  {label:"5 FREE SPINS",short:"5 SPINS",  title:"5 Free Spins",   text:"Grab your 5 FREE SPINS now and win big. Create your account to claim them."},
-  {label:"25% FREEBET", short:"25% BACK", title:"25% Freebet",    text:"Place 4 tickets and get 25% back as a freebet — every single day."}
+  {label:"5 FREE SPINS",short:"5 SPINS",  title:"5 Free Spins",   text:"Grab your 5 FREE SPINS now and win big. Create your account to claim them."}
 ];
 // Wheel layout: offer segments alternate with "Try again" segments.
 const SEGS = [
   {short:"150%",    sub:"BONUS",   offer:0},
   {short:"TRY",     sub:"AGAIN",   offer:null},
   {short:"5 SPINS", sub:"FREE",    offer:1},
-  {short:"TRY",     sub:"AGAIN",   offer:null},
-  {short:"25% BACK",sub:"FREEBET", offer:2},
   {short:"TRY",     sub:"AGAIN",   offer:null}
 ];
 const SEG = SEGS.length, STEP = 360/SEG;
-// Which offer the visitor wins on spin #2: 0 = 150% Bonus, 2 = 5 Free Spins, 4 = 25% Freebet
+// Which offer the visitor wins on spin #2: 0 = 150% Bonus, 2 = 5 Free Spins
 const WIN_SEGMENT = 0;
 const wheelEl = document.getElementById('wheel');
 
@@ -210,7 +199,7 @@ function spin(){
   spinning=true; spinBtn.disabled=true; spinBtn.classList.remove('pulse');
   let idx;
   if(spins===0){                                    // spin 1: lands on "Try again"
-    idx=[1,3,5][Math.floor(Math.random()*3)];
+    idx=[1,3][Math.floor(Math.random()*2)];
     current=null;
   } else {                                          // spin 2+: lands on the winning offer
     idx=WIN_SEGMENT;
