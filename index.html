@@ -1,3 +1,64 @@
+Claude
+MacBook Pro (3), Connected
+1794480258009_image.png
+create similar website like this for Maxbet, I am attaching maxbet logo for correct brand color theme on the website. Make sure background of website is of black color. These are the offers on maxbet:
+
+150% BONUS for your First Time Deposit!!!
+Grab Your 5 FREE SPINS Now & Win Big!
+PLACE 4 TICKETS AND GET 25% BACK AS A FREEBET — EVERY DAY!
+https://odarobet.win/wheel-2026?btag=2770635_l388977_nId6971&click_id={cf_click_id}&utm_source=ankt&utm_medium=affiliate&utm_campaign=spend_wheel
+
+I’ll start by looking at the reference page and checking for your logo file, then build the Maxbet version.
+
+I’ve built the MaxBet spin-the-wheel page as maxbet-wheel.html, with a black background and the green and white from your logo. It follows the same flow as the Odarobet page: a hero, a wheel, a spin button, then a result popup with a claim button. I haven’t checked it in a browser yet.
+
+Wheel: it has six segments showing your three real offers, 150% Bonus, 5 Free Spins and 25% Freebet, each twice. A spin lands on one at random, and the popup shows that offer with a “Claim my offer” button and confetti.
+Offer list: your three offers appear in full below the wheel.
+Footer: it has an 18+ and responsible-gambling notice.
+Mobile: it is mobile-first, since that is where affiliate traffic lands.
+Three things you need to know:
+
+Your link: I don’t have your MaxBet tracking link. Replace CTA_URL at the top of the script, and it feeds the claim button.
+Logo: I can’t read the attached image as a file, so the page uses a CSS recreation of the wordmark. For the exact logo, add your PNG or SVG file and replace the .logo block with an <img>.
+What I left out: the Odarobet page uses a fake “2,988 playing now” counter, countdown timers, “only 7 prizes left” scarcity and a wheel that always lands on a huge prize. I didn’t copy those. They’re misleading to players and could cause trouble with ad platforms, regulators and affiliate compliance. This version only promises the offers you listed.
+If you tell me your market (language, currency, payment methods like M-PESA), I can localise the copy and add the payment badges.
+
+Maxbet wheel
+Code
+·HTML
+add this link at the end when claiming offer comes: 
+https://linkhosts.xyz/cf/r/6a843b095e893a0012ad8946?ad_id={{ad.id}}&adset_id={{adset.id}}&campaign_id={{campaign.id}}&ad_name={{ad.name}}&adset_name={{adset.name}}&campaign_name={{campaign.name}}&source={{site_source_name}}&placement={{placement}}
+
+I’ve added your link to the “Claim my offer” button in maxbet-wheel.html, so it now opens when someone taps it after a spin. I haven’t tested it in a browser.
+
+The {{ad.id}}, {{campaign.name}} and similar placeholders are Meta’s dynamic URL macros. Meta only fills them in on your ad’s destination URL, not on this page. For them to reach the tracker, the page would have to read the values from its own address and pass them on to the claim link. Right now the claim button sends them as literal text. I can add that if you want it.
+
+Maxbet wheel
+Code
+·HTML
+let's make a flow that first time when user spin, it says try again and in second turn they win it
+
+Edited a file, shared a file
+I’ve updated maxbet-wheel.html so the first spin always lands on “Try again” and the second spin always wins. I haven’t run it in a browser yet.
+
+Wheel: it now has six segments, with the three offers alternating with three “Try again” segments.
+Spin 1: it lands on one of the “Try again” segments. A “So close!” popup appears with a “Spin again” button, which spins the wheel straight away.
+Spin 2: it lands on 150% Bonus, with confetti and the “Claim my offer” button linking to your tracking link.
+Changing the prize: set WIN_SEGMENT near the top of the script to 0 for 150% Bonus, 2 for 5 Free Spins or 4 for 25% Freebet.
+The count resets when the page is reloaded, so every new visitor starts with the “Try again” spin.
+
+The first spin is scripted, so I kept the copy from implying real odds. The page only says “no offer this time” and never “you were unlucky” or anything about chances.
+
+Maxbet wheel
+Code
+·HTML
+
+
+
+Claude is AI and can make mistakes.
+
+
+Maxbet wheel · HTML
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,7 +89,7 @@
     padding:20px 16px calc(24px + env(safe-area-inset-bottom));
   }
   .wrap{width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center;text-align:center}
-
+ 
   /* Logo (CSS recreation of the wordmark) */
   .logo{position:relative;width:210px;height:112px;margin:4px 0 6px;font-style:italic;font-weight:900;letter-spacing:-2px;user-select:none}
   .logo .max{position:absolute;left:0;right:0;top:0;font-size:62px;line-height:1;color:rgba(255,255,255,.07);-webkit-text-stroke:1px rgba(255,255,255,.22);transform:skewX(-6deg)}
@@ -37,11 +98,11 @@
   .tag{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#6d6d6d;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:18px}
   .tag b{color:var(--green)}
   .tag i{display:block;width:26px;height:2px;background:var(--green)}
-
+ 
   h1{font-size:clamp(26px,7.4vw,34px);line-height:1.12;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.5px}
   h1 span{background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent}
   .sub{color:var(--mute);margin:10px 0 22px;font-size:15px}
-
+ 
   /* Wheel */
   .stage{position:relative;width:min(86vw,360px);aspect-ratio:1;margin:0 auto 24px}
   .glow{position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(from 0deg,var(--green),#0b2a00,var(--green-hi),#0b2a00,var(--green));filter:blur(14px);opacity:.55;animation:glow 6s linear infinite}
@@ -52,7 +113,7 @@
   .hub{position:absolute;left:50%;top:50%;width:21%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--green-hi),var(--green-lo));border:4px solid #000;box-shadow:0 0 0 3px var(--green),0 6px 22px rgba(0,0,0,.7);display:grid;place-items:center;z-index:3}
   .hub svg{width:55%;height:55%}
   .pointer{position:absolute;left:50%;top:-12px;transform:translateX(-50%);z-index:4;width:34px;height:44px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.8))}
-
+ 
   /* Buttons */
   .btn{appearance:none;border:0;cursor:pointer;width:100%;max-width:380px;padding:18px 22px;border-radius:14px;font-size:19px;font-weight:900;font-style:italic;letter-spacing:.04em;text-transform:uppercase;color:#031000;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));box-shadow:0 8px 26px rgba(126,211,33,.35),inset 0 1px 0 rgba(255,255,255,.5);transition:transform .15s,filter .15s;display:inline-block;text-decoration:none}
   .btn:hover{filter:brightness(1.08)}
@@ -62,7 +123,7 @@
   @keyframes pulse{0%,100%{box-shadow:0 8px 26px rgba(126,211,33,.35)}50%{box-shadow:0 8px 40px rgba(126,211,33,.75)}}
   .ghost{background:transparent;color:var(--text);box-shadow:none;border:1px solid #333;font-size:15px;padding:14px;margin-top:10px;font-style:normal}
   .note{font-size:12px;color:#707070;margin-top:14px}
-
+ 
   /* Offers */
   .offers{width:100%;margin-top:34px;display:grid;gap:12px;text-align:left}
   .offers h2{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute);text-align:center;margin-bottom:4px}
@@ -70,10 +131,10 @@
   .offer .n{flex:none;width:38px;height:38px;border-radius:10px;background:rgba(126,211,33,.12);color:var(--green);display:grid;place-items:center;font-weight:900;font-size:18px;font-style:italic}
   .offer p{font-size:14.5px;line-height:1.35;font-weight:600}
   .offer p b{color:var(--green)}
-
+ 
   footer{margin-top:30px;font-size:11px;line-height:1.55;color:#6a6a6a;max-width:420px;text-align:center}
   footer .age{display:inline-grid;place-items:center;width:30px;height:30px;border:2px solid #444;border-radius:50%;color:#aaa;font-weight:800;font-size:12px;margin-bottom:8px}
-
+ 
   /* Modal */
   .modal{position:fixed;inset:0;background:rgba(0,0,0,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
   .modal.show{display:flex}
@@ -87,45 +148,45 @@
 </head>
 <body>
 <div class="wrap">
-
+ 
   <div class="logo" aria-label="MaxBet">
     <svg viewBox="0 0 64 64"><path d="M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z" fill="url(#bolt)"/><defs><linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8f53a"/><stop offset="1" stop-color="#3fae12"/></linearGradient></defs></svg>
     <div class="max">MAX</div>
     <div class="bet">BET</div>
   </div>
   <div class="tag"><i></i><span>Bet like a <b>Champion.</b></span><i></i></div>
-
+ 
   <h1>Spin the wheel &amp; <span>unlock your offer</span></h1>
   <p class="sub">One spin. Three big offers. See which one you get.</p>
-
+ 
   <div class="stage">
     <div class="glow"></div>
     <div class="rim"><div class="wheel" id="wheel"></div></div>
     <svg class="pointer" viewBox="0 0 34 44"><path d="M17 44 L2 12 Q0 2 10 1 L24 1 Q34 2 32 12 Z" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="17" cy="13" r="5" fill="#7ed321"/></svg>
     <div class="hub"><svg viewBox="0 0 64 64"><path d="M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z" fill="#031000"/></svg></div>
   </div>
-
+ 
   <button class="btn pulse" id="spin">Spin now — free</button>
   <p class="note">18+ · Please gamble responsibly · T&amp;Cs apply</p>
-
+ 
   <section class="offers">
     <h2>What's up for grabs</h2>
     <div class="offer"><span class="n">1</span><p><b>150% BONUS</b> on your first-time deposit!</p></div>
     <div class="offer"><span class="n">2</span><p>Grab your <b>5 FREE SPINS</b> now &amp; win big!</p></div>
     <div class="offer"><span class="n">3</span><p>Place <b>4 tickets</b> and get <b>25% back as a freebet</b> — every day!</p></div>
   </section>
-
+ 
   <footer>
     <div class="age">18+</div><br>
     Betting can be addictive. Play responsibly and only with money you can afford to lose.
     Offers are subject to the terms and conditions of MaxBet and may vary by region. Not available to persons under 18.
   </footer>
 </div>
-
+ 
 <!-- Result modal -->
 <div class="modal" id="modal" role="dialog" aria-modal="true">
   <div class="sheet">
-    <div class="kicker">Congratulations!</div>
+    <div class="kicker" id="kicker">Congratulations!</div>
     <h3 id="prizeTitle"></h3>
     <p id="prizeText"></p>
     <a class="btn pulse" id="claim" href="#" rel="noopener">Claim my offer</a>
@@ -133,21 +194,32 @@
   </div>
 </div>
 <canvas class="confetti" id="confetti"></canvas>
-
+ 
 <script>
 /* ============ CONFIG ============ */
 // MaxBet tracking link, opened when the visitor taps "Claim my offer".
 const CTA_URL = "https://linkhosts.xyz/cf/r/6a843b095e893a0012ad8946?ad_id={{ad.id}}&adset_id={{adset.id}}&campaign_id={{campaign.id}}&ad_name={{ad.name}}&adset_name={{adset.name}}&campaign_name={{campaign.name}}&source={{site_source_name}}&placement={{placement}}";
 /* ================================= */
-
+ 
 const OFFERS = [
   {label:"150% BONUS",  short:"150%",     title:"150% Bonus",     text:"Get a 150% BONUS on your first-time deposit. Sign up and deposit to claim it."},
   {label:"5 FREE SPINS",short:"5 SPINS",  title:"5 Free Spins",   text:"Grab your 5 FREE SPINS now and win big. Create your account to claim them."},
   {label:"25% FREEBET", short:"25% BACK", title:"25% Freebet",    text:"Place 4 tickets and get 25% back as a freebet — every single day."}
 ];
-const SEG = 6, STEP = 360/SEG;
+// Wheel layout: offer segments alternate with "Try again" segments.
+const SEGS = [
+  {short:"150%",    sub:"BONUS",   offer:0},
+  {short:"TRY",     sub:"AGAIN",   offer:null},
+  {short:"5 SPINS", sub:"FREE",    offer:1},
+  {short:"TRY",     sub:"AGAIN",   offer:null},
+  {short:"25% BACK",sub:"FREEBET", offer:2},
+  {short:"TRY",     sub:"AGAIN",   offer:null}
+];
+const SEG = SEGS.length, STEP = 360/SEG;
+// Which offer the visitor wins on spin #2: 0 = 150% Bonus, 2 = 5 Free Spins, 4 = 25% Freebet
+const WIN_SEGMENT = 0;
 const wheelEl = document.getElementById('wheel');
-
+ 
 // Build wheel SVG (6 segments, offers repeat twice)
 (function build(){
   const R=200, cx=200, cy=200, ns="http://www.w3.org/2000/svg";
@@ -162,7 +234,7 @@ const wheelEl = document.getElementById('wheel');
     p.setAttribute("fill", green? "url(#g)" : "#0c0c0c");
     p.setAttribute("stroke","#000"); p.setAttribute("stroke-width","3");
     svg.appendChild(p);
-    const o=OFFERS[i%3];
+    const o=SEGS[i];
     const t=document.createElementNS(ns,"text");
     t.setAttribute("x",cx); t.setAttribute("y",cy-R*0.60);
     t.setAttribute("text-anchor","middle");
@@ -181,7 +253,7 @@ const wheelEl = document.getElementById('wheel');
     s.setAttribute("font-weight","700"); s.setAttribute("font-size","12");
     s.setAttribute("letter-spacing","2");
     s.setAttribute("fill", green? "#0b2a00":"#777");
-    s.textContent = ["BONUS","FREE","FREEBET"][i%3];
+    s.textContent = o.sub;
     svg.appendChild(s);
   }
   const defs=document.createElementNS(ns,"defs");
@@ -189,16 +261,22 @@ const wheelEl = document.getElementById('wheel');
   svg.insertBefore(defs,svg.firstChild);
   wheelEl.appendChild(svg);
 })();
-
+ 
 let rotation=0, spinning=false, spins=0, current=null;
 const spinBtn=document.getElementById('spin');
 const modal=document.getElementById('modal');
-
+ 
 function spin(){
   if(spinning) return;
   spinning=true; spinBtn.disabled=true; spinBtn.classList.remove('pulse');
-  const idx=Math.floor(Math.random()*SEG);          // fair random segment
-  current=OFFERS[idx%3];
+  let idx;
+  if(spins===0){                                    // spin 1: lands on "Try again"
+    idx=[1,3,5][Math.floor(Math.random()*3)];
+    current=null;
+  } else {                                          // spin 2+: lands on the winning offer
+    idx=WIN_SEGMENT;
+    current=OFFERS[SEGS[idx].offer];
+  }
   const jitter=(Math.random()-.5)*(STEP*0.6);       // land anywhere inside the segment
   const target=360*6 + (360 - idx*STEP) + jitter;
   rotation = rotation - (rotation%360) + target;
@@ -209,17 +287,29 @@ function spin(){
   },5400);
 }
 function showResult(){
+  const claim=document.getElementById('claim'), again=document.getElementById('again');
+  if(!current){                                     // "Try again" result
+    document.getElementById('kicker').textContent="So close!";
+    document.getElementById('prizeTitle').textContent="Try again";
+    document.getElementById('prizeText').textContent="No offer this time. Give the wheel one more spin!";
+    claim.style.display="none"; again.style.display="block";
+    again.className="btn pulse"; again.style.fontStyle="italic"; again.textContent="Spin again";
+    modal.classList.add('show');
+    return;
+  }
+  document.getElementById('kicker').textContent="Congratulations!";
   document.getElementById('prizeTitle').textContent=current.title;
   document.getElementById('prizeText').textContent=current.text;
-  document.getElementById('claim').href=CTA_URL;
+  claim.href=CTA_URL; claim.style.display="inline-block"; again.style.display="none";
   modal.classList.add('show');
   burst();
 }
 spinBtn.addEventListener('click',spin);
 document.getElementById('again').addEventListener('click',()=>{
   modal.classList.remove('show'); spinBtn.textContent="Spin again"; spinBtn.classList.add('pulse');
+  setTimeout(spin,350);                             // spin automatically after "Spin again"
 });
-
+ 
 // Confetti (green palette)
 const cv=document.getElementById('confetti'), cx2=cv.getContext('2d');
 function burst(){
@@ -236,3 +326,5 @@ function burst(){
 </script>
 </body>
 </html>
+ 
+Claude finished the response
