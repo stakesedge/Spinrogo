@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#000000">
-<title>Spin the Wheel</title>
+<title>MaxBet — Spin the Wheel · Win Your Bonus</title>
 <meta name="description" content="Spin the MaxBet wheel and unlock your welcome offer. Bet like a champion.">
 <style>
   :root{
@@ -12,104 +12,160 @@
     --green:#7ed321;
     --green-hi:#b8f53a;
     --green-lo:#3fae12;
-    --card:#0d0d0d;
-    --line:#1d1d1d;
-    --text:#f4f4f4;
-    --mute:#9a9a9a;
+    --card:#0b0b0b;
+    --line:#1f1f1f;
+    --text:#f6f6f6;
+    --mute:#9b9b9b;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--bg);color:var(--text);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100%}
+  html,body{background:var(--bg);color:var(--text);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100%;-webkit-tap-highlight-color:transparent}
   body{
+    position:relative;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    padding:26px 16px calc(28px + env(safe-area-inset-bottom));
     background:
-      radial-gradient(ellipse 70% 40% at 50% 0%, rgba(126,211,33,.16), transparent 70%),
-      radial-gradient(ellipse 60% 35% at 50% 100%, rgba(126,211,33,.10), transparent 70%),
+      radial-gradient(ellipse 80% 45% at 50% -5%, rgba(126,211,33,.22), transparent 70%),
+      radial-gradient(ellipse 70% 40% at 50% 105%, rgba(126,211,33,.14), transparent 70%),
       #000;
-    min-height:100vh;display:flex;flex-direction:column;align-items:center;
-    padding:20px 16px calc(24px + env(safe-area-inset-bottom));
   }
-  .wrap{width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  /* subtle diagonal speed lines */
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(126,211,33,.045) 46px 48px);
+    -webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}
+  /* big lightning watermark */
+  body::after{content:"";position:fixed;right:-60px;top:70px;width:300px;height:300px;z-index:0;pointer-events:none;opacity:.07;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z' fill='%237ed321'/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(8deg)}
+  .wrap{position:relative;z-index:1;width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center;text-align:center}
 
-  /* Logo (CSS recreation of the wordmark) */
-  .logo{position:relative;width:210px;height:112px;margin:4px 0 6px;font-style:italic;font-weight:900;letter-spacing:-2px;user-select:none}
-  .logo .max{position:absolute;left:0;right:0;top:0;font-size:62px;line-height:1;color:rgba(255,255,255,.07);-webkit-text-stroke:1px rgba(255,255,255,.22);transform:skewX(-6deg)}
-  .logo .bet{position:absolute;left:0;right:0;top:34px;font-size:84px;line-height:1;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent;transform:skewX(-6deg);filter:drop-shadow(0 4px 18px rgba(126,211,33,.35))}
-  .logo svg{position:absolute;right:-6px;top:-8px;width:62px;height:62px;filter:drop-shadow(0 0 10px rgba(126,211,33,.6))}
-  .tag{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#6d6d6d;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:18px}
-  .tag b{color:var(--green)}
-  .tag i{display:block;width:26px;height:2px;background:var(--green)}
+  /* Top pill */
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;font-size:11.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--green-hi);
+    background:linear-gradient(180deg,rgba(126,211,33,.16),rgba(126,211,33,.05));border:1px solid rgba(126,211,33,.4);box-shadow:0 0 24px rgba(126,211,33,.18)}
+  .pill i{width:7px;height:7px;border-radius:50%;background:var(--green-hi);box-shadow:0 0 10px var(--green-hi);animation:blink 1.4s infinite}
+  @keyframes blink{50%{opacity:.25}}
 
-  h1{font-size:clamp(26px,7.4vw,34px);line-height:1.12;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.5px}
-  h1 span{background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .sub{color:var(--mute);margin:10px 0 22px;font-size:15px}
+  h1{margin-top:20px;font-size:clamp(34px,10vw,46px);line-height:1.02;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-1px}
+  h1 span{display:block;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 22px rgba(126,211,33,.4))}
+  .sub{color:var(--mute);margin:14px 0 30px;font-size:15.5px;line-height:1.45}
 
   /* Wheel */
-  .stage{position:relative;width:min(86vw,360px);aspect-ratio:1;margin:0 auto 24px}
-  .glow{position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(from 0deg,var(--green),#0b2a00,var(--green-hi),#0b2a00,var(--green));filter:blur(14px);opacity:.55;animation:glow 6s linear infinite}
+  .stage{position:relative;width:min(88vw,380px);aspect-ratio:1;margin:0 auto 30px}
+  .glow{position:absolute;inset:-22px;border-radius:50%;background:conic-gradient(from 0deg,var(--green),#06190000,var(--green-hi),#06190000,var(--green));filter:blur(22px);opacity:.6;animation:glow 7s linear infinite}
   @keyframes glow{to{transform:rotate(360deg)}}
-  .rim{position:absolute;inset:0;border-radius:50%;background:linear-gradient(145deg,#2c2c2c,#050505);padding:9px;box-shadow:0 0 0 2px #000,0 0 0 4px var(--green)}
-  .wheel{width:100%;height:100%;border-radius:50%;transition:transform 5.2s cubic-bezier(.12,.72,.08,1);will-change:transform}
+  .rim{position:absolute;inset:0;border-radius:50%;padding:20px;background:radial-gradient(circle at 30% 25%,#3a3a3a,#0a0a0a 70%);
+    box-shadow:0 0 0 2px #000,0 0 0 4px var(--green),0 20px 60px rgba(0,0,0,.8),inset 0 0 30px rgba(0,0,0,.9)}
+  .bulb{position:absolute;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--green-hi);box-shadow:0 0 8px var(--green-hi),0 0 14px rgba(126,211,33,.7);animation:bulb 1.2s infinite}
+  .bulb:nth-child(even){animation-delay:.6s}
+  @keyframes bulb{0%,100%{opacity:1}50%{opacity:.25}}
+  .wheel{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #000;transition:transform 5.2s cubic-bezier(.12,.72,.08,1);will-change:transform}
   .wheel svg{width:100%;height:100%;display:block}
-  .hub{position:absolute;left:50%;top:50%;width:21%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--green-hi),var(--green-lo));border:4px solid #000;box-shadow:0 0 0 3px var(--green),0 6px 22px rgba(0,0,0,.7);display:grid;place-items:center;z-index:3}
+  .hub{position:absolute;left:50%;top:50%;width:22%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle at 35% 28%,var(--green-hi),var(--green-lo));border:4px solid #000;
+    box-shadow:0 0 0 3px var(--green),0 8px 26px rgba(0,0,0,.8),0 0 30px rgba(126,211,33,.5);display:grid;place-items:center;z-index:3}
   .hub svg{width:55%;height:55%}
-  .pointer{position:absolute;left:50%;top:-12px;transform:translateX(-50%);z-index:4;width:34px;height:44px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.8))}
+  .pointer{position:absolute;left:50%;top:-16px;transform:translateX(-50%);z-index:4;width:40px;height:52px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.9)) drop-shadow(0 0 10px rgba(126,211,33,.6))}
 
   /* Buttons */
-  .btn{appearance:none;border:0;cursor:pointer;width:100%;max-width:380px;padding:18px 22px;border-radius:14px;font-size:19px;font-weight:900;font-style:italic;letter-spacing:.04em;text-transform:uppercase;color:#031000;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));box-shadow:0 8px 26px rgba(126,211,33,.35),inset 0 1px 0 rgba(255,255,255,.5);transition:transform .15s,filter .15s;display:inline-block;text-decoration:none}
+  .btn{position:relative;overflow:hidden;appearance:none;border:0;cursor:pointer;width:100%;max-width:380px;padding:19px 22px;border-radius:16px;font-size:19px;font-weight:900;font-style:italic;letter-spacing:.05em;text-transform:uppercase;color:#031000;
+    background:linear-gradient(180deg,var(--green-hi),var(--green-lo));box-shadow:0 10px 30px rgba(126,211,33,.4),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -3px 0 rgba(0,0,0,.18);
+    transition:transform .15s,filter .15s;display:inline-block;text-decoration:none}
+  .btn::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 3.2s infinite}
+  @keyframes shine{0%{left:-70%}55%,100%{left:140%}}
   .btn:hover{filter:brightness(1.08)}
-  .btn:active{transform:scale(.98)}
+  .btn:active{transform:scale(.97)}
   .btn[disabled]{opacity:.55;cursor:not-allowed}
+  .btn[disabled]::after{display:none}
   .pulse{animation:pulse 1.8s ease-in-out infinite}
-  @keyframes pulse{0%,100%{box-shadow:0 8px 26px rgba(126,211,33,.35)}50%{box-shadow:0 8px 40px rgba(126,211,33,.75)}}
+  @keyframes pulse{0%,100%{box-shadow:0 10px 30px rgba(126,211,33,.35),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -3px 0 rgba(0,0,0,.18)}50%{box-shadow:0 10px 46px rgba(126,211,33,.8),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -3px 0 rgba(0,0,0,.18)}}
   .ghost{background:transparent;color:var(--text);box-shadow:none;border:1px solid #333;font-size:15px;padding:14px;margin-top:10px;font-style:normal}
-  .note{font-size:12px;color:#707070;margin-top:14px}
+  .ghost::after{display:none}
+  .note{font-size:12px;color:#757575;margin-top:14px}
 
-  /* Offers */
-  .offers{width:100%;margin-top:34px;display:grid;gap:12px;text-align:left}
-  .offers h2{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--mute);text-align:center;margin-bottom:4px}
-  .offer{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:14px;padding:14px 16px}
-  .offer .n{flex:none;width:38px;height:38px;border-radius:10px;background:rgba(126,211,33,.12);color:var(--green);display:grid;place-items:center;font-weight:900;font-size:18px;font-style:italic}
-  .offer p{font-size:14.5px;line-height:1.35;font-weight:600}
-  .offer p b{color:var(--green)}
+  /* Trust chips */
+  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:18px}
+  .chips span{font-size:11.5px;font-weight:700;color:#cfcfcf;padding:7px 12px;border-radius:999px;background:#0e0e0e;border:1px solid #232323}
+  .chips b{color:var(--green)}
 
-  footer{margin-top:30px;font-size:11px;line-height:1.55;color:#6a6a6a;max-width:420px;text-align:center}
-  footer .age{display:inline-grid;place-items:center;width:30px;height:30px;border:2px solid #444;border-radius:50%;color:#aaa;font-weight:800;font-size:12px;margin-bottom:8px}
+  /* Section titles */
+  .sec{width:100%;margin-top:46px;text-align:left}
+  .sec h2{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--green);text-align:center;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .sec h2::before,.sec h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(126,211,33,.5))}
+  .sec h2::after{transform:scaleX(-1)}
+
+  /* Offer card */
+  .offer{position:relative;overflow:hidden;display:flex;gap:16px;align-items:center;padding:20px 18px;border-radius:20px;
+    background:linear-gradient(135deg,rgba(126,211,33,.18),rgba(126,211,33,.03) 55%,#0b0b0b);border:1px solid rgba(126,211,33,.45);box-shadow:0 0 40px rgba(126,211,33,.12)}
+  .offer::after{content:"";position:absolute;right:-30px;top:-30px;width:130px;height:130px;opacity:.12;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z' fill='%23b8f53a'/%3E%3C/svg%3E") center/contain no-repeat}
+  .offer .big{flex:none;width:74px;height:74px;border-radius:18px;display:grid;place-items:center;text-align:center;line-height:1;font-weight:900;font-style:italic;color:#031000;
+    background:linear-gradient(180deg,var(--green-hi),var(--green-lo));box-shadow:0 8px 22px rgba(126,211,33,.35)}
+  .offer .big strong{font-size:34px;display:block}
+  .offer .big small{font-size:10px;letter-spacing:.14em;display:block;margin-top:2px}
+  .offer p{font-size:16px;line-height:1.35;font-weight:700}
+  .offer p b{color:var(--green-hi)}
+  .offer p em{display:block;font-style:normal;font-size:12.5px;color:var(--mute);font-weight:500;margin-top:4px}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .step{padding:16px 8px 14px;border-radius:16px;background:var(--card);border:1px solid var(--line);text-align:center}
+  .step .n{width:34px;height:34px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-style:italic;color:#031000;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));box-shadow:0 0 16px rgba(126,211,33,.4)}
+  .step b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+  .step span{font-size:11.5px;color:var(--mute);line-height:1.3;display:block}
+
+  footer{margin-top:40px;padding-top:22px;border-top:1px solid #151515;font-size:11px;line-height:1.6;color:#6a6a6a;max-width:420px;text-align:center}
+  footer .age{display:inline-grid;place-items:center;width:34px;height:34px;border:2px solid #444;border-radius:50%;color:#aaa;font-weight:800;font-size:12px;margin-bottom:10px}
 
   /* Modal */
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.86);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
   .modal.show{display:flex}
-  .sheet{width:100%;max-width:400px;background:linear-gradient(180deg,#111,#050505);border:1px solid var(--green);border-radius:22px;padding:28px 22px 22px;text-align:center;box-shadow:0 0 60px rgba(126,211,33,.28);animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+  .sheet{position:relative;overflow:hidden;width:100%;max-width:400px;background:linear-gradient(180deg,#121212,#050505);border:1px solid var(--green);border-radius:26px;padding:34px 24px 24px;text-align:center;box-shadow:0 0 80px rgba(126,211,33,.35);animation:pop .4s cubic-bezier(.2,1.4,.4,1)}
+  .sheet::before{content:"";position:absolute;left:50%;top:-90px;width:300px;height:200px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(126,211,33,.35),transparent 70%);pointer-events:none}
   @keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
-  .sheet .kicker{color:var(--green);font-weight:800;letter-spacing:.25em;font-size:12px;text-transform:uppercase}
-  .sheet h3{font-size:30px;font-weight:900;font-style:italic;text-transform:uppercase;line-height:1.1;margin:10px 0 8px;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .sheet p{color:#c8c8c8;font-size:15px;margin-bottom:20px}
+  .sheet .kicker{position:relative;color:var(--green);font-weight:800;letter-spacing:.28em;font-size:12px;text-transform:uppercase}
+  .sheet h3{position:relative;font-size:34px;font-weight:900;font-style:italic;text-transform:uppercase;line-height:1.05;margin:12px 0 10px;background:linear-gradient(180deg,var(--green-hi),var(--green-lo));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sheet p{position:relative;color:#cfcfcf;font-size:15px;line-height:1.45;margin-bottom:22px}
   .confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <h1>Spin the wheel &amp; <span>unlock your offer</span></h1>
-  <p class="sub">Spin the wheel. Two big offers. See which one you get.</p>
+  <div class="pill"><i></i>Welcome offer</div>
+  <h1>Spin the wheel <span>win free spins</span></h1>
+  <p class="sub">Give the wheel a spin and see what you get.</p>
 
   <div class="stage">
     <div class="glow"></div>
-    <div class="rim"><div class="wheel" id="wheel"></div></div>
-    <svg class="pointer" viewBox="0 0 34 44"><path d="M17 44 L2 12 Q0 2 10 1 L24 1 Q34 2 32 12 Z" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="17" cy="13" r="5" fill="#7ed321"/></svg>
+    <div class="rim" id="rim"><div class="wheel" id="wheel"></div></div>
+    <svg class="pointer" viewBox="0 0 34 44"><defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8f53a"/><stop offset="1" stop-color="#3fae12"/></linearGradient></defs><path d="M17 44 L2 12 Q0 2 10 1 L24 1 Q34 2 32 12 Z" fill="url(#pg)" stroke="#000" stroke-width="2.5"/><circle cx="17" cy="13" r="5" fill="#000"/></svg>
     <div class="hub"><svg viewBox="0 0 64 64"><path d="M60 2 L22 30 L34 32 L6 62 L44 36 L32 34 Z" fill="#031000"/></svg></div>
   </div>
 
   <button class="btn pulse" id="spin">Spin now — free</button>
-  <p class="note"> Spin Now! · T&amp;Cs apply</p>
+  <div class="chips"><span><b>✓</b> Free to spin</span><span><b>✓</b> Takes seconds</span><span><b>✓</b> Works on mobile</span></div>
+  <p class="note">18+ · Please gamble responsibly · T&amp;Cs apply</p>
 
-  <section class="offers">
+  <section class="sec">
     <h2>What's up for grabs</h2>
-    <div class="offer"><span class="n">1</span><p><b>150% BONUS</b> on your first-time deposit!</p></div>
-    <div class="offer"><span class="n">2</span><p>Grab your <b>5 FREE SPINS</b> now &amp; win big!</p></div>
+    <div class="offer">
+      <div class="big"><div><strong>5</strong><small>FREE SPINS</small></div></div>
+      <p>Grab your <b>5 FREE SPINS</b> now &amp; win big!<em>Create your account to claim them.</em></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><b>Spin</b><span>Tap the button and spin the wheel</span></div>
+      <div class="step"><div class="n">2</div><b>Win</b><span>Land your free spins offer</span></div>
+      <div class="step"><div class="n">3</div><b>Claim</b><span>Create your account to claim</span></div>
+    </div>
   </section>
 
   <footer>
     <div class="age">18+</div><br>
-    Offers are subject to the terms and conditions of MaxBet and may vary by region.
+    Betting can be addictive. Play responsibly and only with money you can afford to lose.
+    Offers are subject to the terms and conditions of MaxBet and may vary by region. Not available to persons under 18.
   </footer>
 </div>
 
@@ -123,6 +179,15 @@
     <button class="btn ghost" id="again">Spin again</button>
   </div>
 </div>
+<!-- Exit-intent modal -->
+<div class="modal" id="exitModal" role="dialog" aria-modal="true">
+  <div class="sheet">
+    <div class="kicker">Wait!</div>
+    <h3>Your offer is still waiting</h3>
+    <p>Spin the wheel to see which MaxBet offer you get. Are you sure you want to leave?</p>
+    <button class="btn pulse" id="stay">Keep spinning</button>
+  </div>
+</div>
 <canvas class="confetti" id="confetti"></canvas>
 
 <script>
@@ -132,18 +197,17 @@ const CTA_URL = "https://linkhosts.xyz/cf/r/6a843b095e893a0012ad8946?ad_id={{ad.
 /* ================================= */
 
 const OFFERS = [
-  {label:"150% BONUS",  short:"150%",     title:"150% Bonus",     text:"Get a 150% BONUS on your first-time deposit. Sign up and deposit to claim it."},
   {label:"5 FREE SPINS",short:"5 SPINS",  title:"5 Free Spins",   text:"Grab your 5 FREE SPINS now and win big. Create your account to claim them."}
 ];
 // Wheel layout: offer segments alternate with "Try again" segments.
 const SEGS = [
-  {short:"150%",    sub:"BONUS",   offer:0},
+  {short:"5 SPINS", sub:"FREE",    offer:0},
   {short:"TRY",     sub:"AGAIN",   offer:null},
-  {short:"5 SPINS", sub:"FREE",    offer:1},
+  {short:"5 SPINS", sub:"FREE",    offer:0},
   {short:"TRY",     sub:"AGAIN",   offer:null}
 ];
 const SEG = SEGS.length, STEP = 360/SEG;
-// Which offer the visitor wins on spin #2: 0 = 150% Bonus, 2 = 5 Free Spins
+// Segment the wheel stops on for spin #2 (0 and 2 are both "5 Free Spins")
 const WIN_SEGMENT = 0;
 const wheelEl = document.getElementById('wheel');
 
@@ -188,6 +252,10 @@ const wheelEl = document.getElementById('wheel');
   svg.insertBefore(defs,svg.firstChild);
   wheelEl.appendChild(svg);
 })();
+
+(function bulbs(){const r=document.getElementById('rim'),n=24;
+  for(let i=0;i<n;i++){const a=i/n*2*Math.PI,d=document.createElement('i');d.className='bulb';
+    d.style.left=(50+47.4*Math.sin(a))+'%';d.style.top=(50-47.4*Math.cos(a))+'%';r.appendChild(d);}})();
 
 let rotation=0, spinning=false, spins=0, current=null;
 const spinBtn=document.getElementById('spin');
@@ -236,6 +304,20 @@ document.getElementById('again').addEventListener('click',()=>{
   modal.classList.remove('show'); spinBtn.textContent="Spin again"; spinBtn.classList.add('pulse');
   setTimeout(spin,350);                             // spin automatically after "Spin again"
 });
+
+// Exit-intent popup: desktop mouse leaving the top, or mobile back button (shown once)
+const exitModal=document.getElementById('exitModal');
+let exitShown=false;
+function showExit(){
+  if(exitShown || spinning || modal.classList.contains('show')) return;
+  exitShown=true; exitModal.classList.add('show');
+}
+document.addEventListener('mouseout',e=>{ if(!e.relatedTarget && e.clientY<=0) showExit(); });
+try{
+  history.pushState({mb:1},"");
+  addEventListener('popstate',()=>{ if(!exitShown){ showExit(); history.pushState({mb:1},""); } });
+}catch(e){}
+document.getElementById('stay').addEventListener('click',()=>exitModal.classList.remove('show'));
 
 // Confetti (green palette)
 const cv=document.getElementById('confetti'), cx2=cv.getContext('2d');
